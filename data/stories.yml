@@ -1,0 +1,22 @@
+version: "3.1"
+
+stories:
+
+
+# - story: reset slots, affirm
+#   steps:
+#   - intent: intent_reset_slots
+#   - action: action_deactivate_loop
+#   - active_loop: null
+#   - action: action_ask_confirmation_to_reset
+#   - intent: intent_affirm
+#   - action: action_reset_slots
+
+# - story: reset slots, deny
+#   steps:
+#   - intent: intent_reset_slots
+#   - action: action_deactivate_loop
+#   - active_loop: null
+#   - action: action_ask_confirmation_to_reset
+#   - intent: intent_deny
+#   - action: action_abort_reset

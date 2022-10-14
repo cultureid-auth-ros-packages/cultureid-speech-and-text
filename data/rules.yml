@@ -1,0 +1,237 @@
+version: "3.1"
+
+rules:
+
+
+
+- rule: attract user and activate intro form
+  conversation_start: true
+  steps:
+  - intent: intent_greet
+  - action: action_introduce
+  - action: form_user
+  - active_loop: form_user
+
+
+- rule: Submit user form and activate exhibit form
+  condition:
+  - active_loop: form_user
+  steps:
+  - action: form_user
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: action_submit_form_user
+  - action: form_exhibit
+  - active_loop: form_exhibit
+
+# - rule: attract user and activate intro form
+#   steps:
+#   - intent: intent_greet
+#   - action: action_introduce
+#   - action: form_exhibit
+#   - active_loop: form_exhibit
+
+- rule: Submit exhibit form
+  condition:
+  - active_loop: form_exhibit
+  steps:
+  - action: form_exhibit
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: action_submit_form_exhibit
+
+
+# - rule: attract user and activate intro form
+#   steps:
+#   - intent: intent_greet
+#   - action: action_introduce
+#   - action: form_user
+#   - active_loop: form_user
+
+# - rule: Submit exhibit form
+#   condition:
+#   - active_loop: form_user
+#   steps:
+#   - action: form_user
+#   - active_loop: null
+#   - slot_was_set:
+#     - requested_slot: null
+#   - action: action_submit_form_user
+
+
+
+
+
+- rule: Implementation of the Two-Stage-Fallback 
+  steps:
+  - intent: nlu_fallback
+  - action: action_fallback
+
+
+- rule: react to silence 
+  steps:
+  - intent: intent_silence
+  - action: action_react_to_silence
+
+
+- rule: ask available exhibits
+  steps:
+  - intent: intent_say_available_exhibits
+  - action: action_say_available_exhibits
+
+- rule: affirm
+  steps:
+  - intent: intent_affirm
+  - action: action_repeat
+
+- rule: deny
+  steps:
+  - intent: intent_deny
+  - action: action_repeat
+
+- rule: all
+  steps:
+  - intent: intent_all
+  - action: action_repeat
+
+- rule: whatever
+  steps:
+  - intent: intent_whatever
+  - action: action_repeat
+
+
+- rule: say goodbye
+  steps:
+  - intent: intent_goodbye
+  - action: action_say_goodbye
+
+# - rule: Reset slots outside form user
+#   steps:
+#   - intent: intent_reset_slots
+#   - action: action_deactivate_loop
+#   - active_loop: null
+#   - action: action_ask_confirmation_to_reset
+
+- rule: Reset slots 
+  steps:
+  - intent: intent_reset_slots
+  - action: action_reset_slots
+
+- rule: greet
+  conversation_start: false
+  steps:
+  - intent: intent_greet
+  - action: action_introduce
+
+- rule: name
+  steps:
+  - intent: intent_name
+  - action: utter_say_name
+
+- rule: age
+  steps:
+  - intent: intent_age
+  - action: utter_say_age
+
+- rule: occupation
+  steps:
+  - intent: intent_occupation
+  - action: utter_say_occupation
+
+- rule: subject
+  steps:
+  - intent: intent_subject
+  - action: utter_say_favorite_subject
+
+- rule: continue
+  steps:
+  - intent: intent_no_change_exhibit
+  - action: action_no_change_exhibit
+
+- rule: repeat
+  steps:
+  - intent: intent_repeat
+  - action: action_repeat
+  
+  
+- rule: stop tour
+  steps:
+  - intent: intent_stop_tour
+  - action: action_stop_tour
+
+- rule: exhibit
+  steps:
+  - intent: intent_exhibit
+  - action: action_validate_intents
+  - action: action_introduce_exhibit
+  - action: action_say_capabilities
+
+
+- rule: current_exhibit
+  steps:
+  - intent: intent_ask_current_exhibit
+  - action: action_validate_intents
+  - action: action_say_current_exhibit
+
+- rule: say name
+  steps:
+  - intent: intent_what_is_your_name
+  - action: utter_say_name
+
+- rule: i am fine
+  steps:
+  - intent: intent_how_are_you
+  - action: utter_say_fine
+
+- rule: ask for writer
+  steps:
+  - intent: intent_writer
+  - action: action_validate_intents
+  - action: action_say_writer
+  
+
+- rule: ask for finding
+  steps:
+  - intent: intent_finding
+  - action: action_validate_intents
+  - action: action_say_finding
+  
+
+- rule: ask for creation
+  steps:
+  - intent: intent_creation
+  - action: action_validate_intents
+  - action: action_say_creation
+  
+
+- rule: ask for exposition
+  steps:
+  - intent: intent_exposition
+  - action: action_validate_intents
+  - action: action_say_exposition
+  
+
+- rule: ask for language
+  steps:
+  - intent: intent_language
+  - action: action_validate_intents
+  - action: action_say_language
+ 
+
+- rule: ask for importance
+  steps:
+  - intent: intent_importance
+  - action: action_validate_intents
+  - action: action_say_importance 
+        
+
+- rule: ask for content
+  steps:
+  - intent: intent_content
+  - action: action_validate_intents
+  - action: action_say_content
+  
+
+

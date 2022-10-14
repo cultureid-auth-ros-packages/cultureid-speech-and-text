@@ -1,0 +1,17 @@
+FROM python:3.7
+
+
+
+WORKDIR /app
+
+
+COPY requirements_callback.txt ./
+
+
+
+
+RUN pip install -r requirements_callback.txt
+
+
+
+COPY callback_server.py .

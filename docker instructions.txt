@@ -1,0 +1,48 @@
+
+
+Docker Version:        docker -v
+
+install Rasa:   	docker run -v %cd%:/app rasa/rasa:3.1.6-full init --no-prompt
+
+shell rasa:  		docker run -it -v %cd%:/app rasa/rasa:3.1.6-full shell
+
+check the containers running:     	 docker ps
+
+change to the container directory:    docker exec -t -i [container ID] /bin/bash
+					docker exec --u root -t -i [container ID] /bin/bash
+
+chech what is inside a directory /app:   	 ls
+
+copy from container to current directory:     docker cp [container ID]:/app .     and vice versa
+
+create empty file:               cd . > [filename]
+
+actions: 	Dockerfile   +   docker build . -t rasa/rasa-sdk:latest
+
+create netwrok: 	docker network create my-project
+
+run actions:  		docker run rasa/rasa-sdk:latest
+		docker run -d -v %cd%/actions:/app/actions --net my-project --name action-server rasa/rasa-sdk:latest
+
+stop actions:       docker stop action-server
+
+rasa run:	 	docker run -it -v %cd%:/app -p 5005:5005 --net my-project rasa/rasa:3.1.6-full shell
+
+rasa train:     docker run -v %cd%:/app rasa/rasa:latest train --domain domain.yml --data data --out models
+--------------------------------------------------------------------
+
+docker compose and gives you new line to type other command:  docker-compose up --detach
+
+if images exist, docker takes the existed ones. If changes have been made then rebuild is required:  docker-compose up --build
+
+delete ALL images container volumes: docker system prune -a
+
+delete volumes: docker volume prune
+
+build image from file and give it name: docker build -f linux_Dockerfile . -t [name]
+
+
+όυαν πειράζω το actions οι αλλαγές περνάνε απλά με compose up χωρις το build.
+Aυτά που εμφανίζονται με print στα actions εμφανίζονται όλα μαζί αφού κλείσει με down...  ούτε με attach το εμφανίζει on the fly
+
+docker-compose run voicebot

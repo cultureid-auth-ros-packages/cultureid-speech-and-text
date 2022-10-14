@@ -1,0 +1,39 @@
+version: '3.0'
+
+services:
+
+
+
+  rasa:
+    build:
+      context: ./
+      dockerfile: Dockerfile_rasa
+    ports:
+    - "5005:5005"
+    volumes:
+    - ".:/app/"   #gia na parei ta arxeia kai to model
+    command: ["run", "--enable-api"]
+
+  action-server:
+    build:
+      context: ./
+      dockerfile: Dockerfile_rasa_sdk
+    ports:
+      - 5055:5055
+    volumes:
+      - ./actions:/app/actions
+
+
+#  voicebot:
+    #build:
+      #context: ./
+      #dockerfile: Dockerfile_voicebot
+    #privileged: true
+
+    #tty: true
+    #stdin_open: true
+    #volumes:
+    #- ".:/app/"
+    #devices:
+    #- "/dev:/dev"
+#    command: python3 save_audio.py

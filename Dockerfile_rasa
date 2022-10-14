@@ -1,0 +1,30 @@
+FROM rasa/rasa:latest
+
+# Use subdirectory as working directory
+WORKDIR /app
+
+# Copy any additional custom requirements, if necessary (uncomment next line)
+# COPY actions/requirements.txt ./
+
+# Change back to root user to install dependencies
+USER root
+
+# Install extra requirements for actions code, if necessary (uncomment next line)
+# RUN pip install -r requirements.txt
+
+# RUN python -m pip install --upgrade pip
+# RUN python -m pip install transformers
+# RUN python -m pip install rasa[transformers]
+# RUN python -m pip install nltk
+RUN python -m pip install spacy
+RUN python -m spacy download el_core_news_md
+# RUN python -m spacy link el_core_news_md el
+
+# Copy actions folder to working directory
+# COPY ./actions /app/actions
+
+# By best practices, don't run the code with root user
+USER 1001
+
+# for interactive 
+# ENTRYPOINT ["/bin/bash"]

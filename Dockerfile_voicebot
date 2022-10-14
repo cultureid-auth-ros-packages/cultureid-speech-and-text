@@ -1,0 +1,67 @@
+# coding=utf-8
+# FROM python:3.7-alpine3.16
+FROM python:3.7
+# FROM python:3.7-slim-buster
+
+
+WORKDIR /app
+
+
+COPY requirements_voicebot.txt ./
+
+# USER root
+# RUN python -m pip install --upgrade pip
+# RUN pip install pyaudio
+# RUN pipwin install pyaudio
+# COPY PyAudio-0.2.11-cp37-cp37m-win_amd64.whl ./
+
+
+# COPY file.mp3 ./
+# # Install extra requirements for actions code, if necessary (uncomment next line)
+#
+# RUN python -m pip install --upgrade pip
+# RUN pip install PyAudio-0.2.11-cp37-cp37m-win_amd64.whl
+RUN apt-get update
+RUN apt-get install libasound-dev libportaudio2 libportaudiocpp0 portaudio19-dev -y
+
+RUN apt-get update -yy && \
+    apt-get install -yy \
+    alsa-oss \
+    alsa-tools \
+    alsa-utils \
+    python-all-dev \
+    pulseaudio \
+    libpulse0 \
+    vlc
+
+# RUN apk add --update libasound-dev libportaudio2 libportaudiocpp0 portaudio19-dev
+
+RUN pulseaudio --start
+
+
+RUN pip install -r requirements_voicebot.txt
+
+# RUN apt-get install alsa-base alsa-utils -y
+
+COPY save_audio.py .
+COPY part_B_5.mp3 .
+
+# COPY send.py .
+
+# COPY test.py .
+
+
+# RUN pip install -r requirements_voicebot.txt
+
+
+RUN groupadd -r cultureid_user0 && useradd -r -g cultureid_user0 -G audio,video cultureid_user0 \
+    && mkdir -p /home/cultureid_user0. && chown -R cultureid_user0:cultureid_user0 /home/cultureid_user0
+
+USER cultureid_user0
+#WORKDIR /home/cultureid_user0
+
+# ENTRYPOINT ["/bin/bash"]
+#RUN alsactl init
+RUN pwd
+RUN ls
+CMD ["python3", "save_audio.py"]
